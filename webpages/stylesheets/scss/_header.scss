@@ -1,0 +1,54 @@
+$primary-color: #1341ad;
+$header-text: #ffffff;
+$font-stack: roboto;
+$secondary-color: #3a60ab;
+* {
+	margin:	0px 0px 0px 0px;
+	padding: 0px;
+	font-family: $font-stack;
+}
+body{
+	height: 100%;
+}
+.header {
+	background-color: $primary-color;
+	width: 100%;
+	height: 60px;
+}
+
+
+.logo , .login, .register{
+	box-sizing: border-box;
+	height: inherit;
+	margin-left: 5%;
+	width: 10%;
+	font-weight: bold;
+	color: $header-text;
+	font-size: 25px;
+	transform: scale(0.8);
+	letter-spacing: 2px;
+	text-align: center;
+	line-height: 60px;
+	border-radius: 30px;
+	background-color: $secondary-color;
+	float: left;
+}
+
+.register{
+	float: right;
+	margin-right: 5%;
+}
+.login{
+	float:right;
+}
+
+.login:hover,.register:hover{
+	transition: 0.5s;
+	font-size: 27px;
+	background-color: white;
+	color: $secondary-color;
+}
+
+
+
+ 		
