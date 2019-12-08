@@ -1,6 +1,7 @@
 const connectionPool = require('../config/database-connection');
 const insertQuery = 'insert into users(firstname,lastname,email,username,password,mobile) values(?,?,?,?,?,?)';
-
+const usernameQuery = 'select username from users where username = ?';
+const getUserQuery = 'select username,password from users where username = ?';
 
 var createNewUser = (user)=>{
     return new Promise((resolve,reject) => {
@@ -26,7 +27,7 @@ var checkExistingUser = (username)=>{
             if(err){
                 reject()
             }
-            conn.query('select username from users where username = ?',username, (err,results,fields)=>{
+            conn.query(usernameQuery,username, (err,results,fields)=>{
                 if(err){
                     reject();
                 }
@@ -42,5 +43,31 @@ var checkExistingUser = (username)=>{
     });
 };
 
+var authenticate = (userdata)=>{
+    return new Promise((resolve,reject)=>{
+        connectionPool.getConnection((err,conn)=>{
+            if(err){
+                reject({queryExecuted : false});
+            }
+            conn.query(getUserQuery,userdata.username , (err,results,fields)=>{
+                if(err){
+                    reject({queryExecuted:false});
+                }
+                if(results.length == 0){
+                    reject({queryExecuted: true , usernameFound:false});
+                }
+                else if(results[0].password != userdata.password){
+                    reject({queryExecuted: true , usernameFound:true,passwordMatched: false});
+                }
+                else{
+                    resolve();
+                }
+            });
+            conn.release();
+        });
+    });
+};
+
 module.exports.createNewUser = createNewUser;
 module.exports.checkExistingUser = checkExistingUser;
+module.exports.authenticate = authenticate;
