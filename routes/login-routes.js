@@ -18,6 +18,11 @@ router.post('/authenticate' , (request,response)=>{
 	console.log(request.params.password);
 	const uAuth = userController.authenticate({username: request.body.username, password: sha256(request.body.password)});	
 	uAuth.then(()=>{
+		if(request.cookies.user != request.body.username){
+			response.clearCookie('user')
+		}
+		response.cookie('user',request.body.username);
+		request.session.username = request.body.username;
 		response.redirect('/chat');
 	});
 

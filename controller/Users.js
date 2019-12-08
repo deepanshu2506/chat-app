@@ -60,7 +60,7 @@ var authenticate = (userdata)=>{
                     reject({queryExecuted: true , usernameFound:true,passwordMatched: false});
                 }
                 else{
-                    resolve();
+                    resolve(results);
                 }
             });
             conn.release();
