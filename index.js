@@ -3,7 +3,8 @@ var app = express();
 
 var loginRoutes = require('./routes/login-routes.js');
 var registerRoutes = require('./routes/register-routes.js');
-
+app.set('view engine', 'pug');
+app.set('views','./webpages/templates');
 
 app.use(express.static('webpages'));
 app.use('/login',loginRoutes);

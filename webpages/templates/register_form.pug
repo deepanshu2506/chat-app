@@ -1,0 +1,35 @@
+doctype html
+html
+    head
+        title Welcome to CHAT!!
+        link(rel='stylesheet', type='text/css', href='../stylesheets/css/homepage.css')
+        script(type='text/javascript', src='../scripts/jquery.js')
+        link(href='https://fonts.googleapis.com/css?family=Roboto', rel='stylesheet')
+    body
+        .header
+            .logo MYCHAT
+            a(href='/register')
+                .register Register
+            a(href='/login')
+                .login Login
+        .content
+            .login-form
+                span.error #{error}
+                form(action='/register/add_new_user', method='post')
+                    label(for='firstname') First Name
+                    input#firstname(type='text', name='firstname', placeholder='Enter firstname', required='')
+                    label(for='lastname') Lastname
+                    input#lastname(type='text', name='lastname', placeholder='Enter lastname', required='')
+                    label(for='username') Username
+                    input#username(type='text', name='username', placeholder='Enter username', required='')
+                    label(for='email') email
+                    input#email(type='email', name='email', placeholder='Enter email', required='')
+                    label(for='mobile') mobile:
+                    input#mobile(type='tel', name='mobile', placeholder='Enter mobile no.', required='')
+                    label(for='password') Password
+                    input#password(type='password', name='password', placeholder='Enter password', required='')
+                    label(for='repassword') Re-enter Password
+                    input#repassword(type='password', name='repassword', placeholder='Re-enter password', required='')
+                    button(type='submit') Register
+        | l    
+        script(type='text/javascript', src='scripts/register_validation.js')

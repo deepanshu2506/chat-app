@@ -32,7 +32,7 @@ $('#lastname').on('keyup',function(event){
 
 $('#username').on('keyup',function(event){
 
-    if($(this).val() != '' && !usernameRegex.test($(this).val()) && !error.unamenameError){
+    if($(this).val() != '' && !usernameRegex.test($(this).val()) && !error.unameError){
         $(this).after('<span>*only a-z ,0-9, . , _ are allowed </span>');
         error.unameError = true;
     }else{
@@ -40,6 +40,26 @@ $('#username').on('keyup',function(event){
             $(this).next('span').remove();
             error.unameError = false;
         }
+    }
+});
+$('#username').on('focusout',function(event){
+    if(!error.unameError){
+        console.log('fetching');
+        $.ajax({
+            url: '/register/check_username',
+            type:"POST",
+            data: {username: $('#username').val()},
+            success:(data)=>{
+                if(data.found){
+                    $('#username').after("<span>*username is taken</span>");
+                    error.unameError = true;
+                }
+                else{
+                        $('#username').after("<span>*username is available</span>");
+                        error.unameError = false;
+                }
+            }
+        });
     }
 });
 

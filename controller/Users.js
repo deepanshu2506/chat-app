@@ -20,4 +20,27 @@ var createNewUser = (user)=>{
     });
 };
 
+var checkExistingUser = (username)=>{
+    return new Promise((resolve,reject)=>{
+        connectionPool.getConnection((err,conn)=>{
+            if(err){
+                reject()
+            }
+            conn.query('select username from users where username = ?',username, (err,results,fields)=>{
+                if(err){
+                    reject();
+                }
+                if(results.length != 0){
+                    resolve("Username Taken")
+                }
+                else{
+                    reject();
+                }
+            });
+            conn.release();
+        });
+    });
+};
+
 module.exports.createNewUser = createNewUser;
+module.exports.checkExistingUser = checkExistingUser;
